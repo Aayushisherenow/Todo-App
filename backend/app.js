@@ -18,7 +18,7 @@ app.use(
 import todoRoutes from './routes/todoRoutes.js';
 app.use('/api/todos', todoRoutes);
 
-// import userRoutes from './routes/userRoutes.js';
-// app.use('/api/users', userRoutes);
+import userRoutes from './routes/userRoutes.js';
+app.use('/api/users', userRoutes);
 
 export default app;
