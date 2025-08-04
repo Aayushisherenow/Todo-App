@@ -15,7 +15,7 @@ const createTodo = async (req, res) => {
         const newTodo = await Todo.create({
             title,
             description,
-            // user: req.user.id
+            author: req.user._id
         });
 
         return res.status(201).json({ message: "Todo created successfully", data: newTodo });
@@ -32,9 +32,16 @@ const editTodo = async (req, res) => {
     const { title, description, completed } = req.body;
     
 
-    if (!title && !description && !completed) {
-        return res.status(400).json({ message: "Title, description, or completed status are required" });
-    }
+if (
+  title === undefined &&
+  description === undefined &&
+  completed === undefined
+) {
+  return res
+    .status(400)
+    .json({ message: "Title, description, or completed status are required" });
+}
+
 
     try {
         const todo = await Todo.findById(id);
@@ -42,9 +49,9 @@ const editTodo = async (req, res) => {
             return res.status(404).json({ message: "Todo not found" });
         }
 
-        todo.description = description ? description : todo.description;
-        todo.title = title ? title : todo.title;
-        todo.completed = completed ? completed : todo.completed;
+        todo.title = title !== undefined ? title : todo.title;
+        todo.description = description !== undefined ? description : todo.description;
+        todo.completed = completed !== undefined ? completed : todo.completed;
 
         const updatedTodo = await todo.save();
 
@@ -79,8 +86,11 @@ const deleteTodo = async (req, res) => {
 const getTodos = async (req, res) => { 
 
     try {
-        const todos = await Todo.find()
-            .populate("title description completed")
+            const userId = req.user._id;
+ if (!userId) {
+   return res.status(401).json({ message: "Unauthorized: User ID not found" });
+ }
+        const todos = await Todo.find({ author: userId })
             .sort({ createdAt: -1 });
 
         return res.status(200).json({ message: "Todos fetched successfully", data: todos });

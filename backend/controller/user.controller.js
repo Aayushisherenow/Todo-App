@@ -1,12 +1,14 @@
 import  User  from "../models/user.model.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+
 
 const registerUser = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
 
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-  if (!username.trim() || !password.trim()) {
+  if (!username.trim() || !email.trim() || !password.trim()) {
     return res.status(400).json({ message: "All fields are required" });
   } else if (username.length < 6) {
     return res
@@ -25,9 +27,13 @@ const registerUser = async (req, res) => {
   }
 
   try {
+
+        const hashedPassword = await bcrypt.hash(password.trim(), 10);
+
     const createdUser = await User.create({
       username: username.trim(),
-      password: password.trim(),
+      email: email.trim(),
+      password: hashedPassword,
     });
 
 
@@ -43,7 +49,7 @@ const registerUser = async (req, res) => {
 
     return res
       .status(201)
-      .json({ message: "User registered successfully", user: createdUser });
+      .json({ message: "User registered successfully", user: createdUserExists });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -63,14 +69,21 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    if (user.password !== password.trim()) {
+    const isMatch = await bcrypt.compare(password.trim(), user.password);
+    if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
+     const token = jwt.sign(
+       { _id: user._id },
+       process.env.JWT_SECRET_KEY,
+       { expiresIn: "10d" } 
+     );
 
     return res.status(200).json({
       message: "Login successful",
-      user: { id: user._id, username: user.username },
+      token,
+      user: { id: user._id, username: user.username, email: user.email },
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
