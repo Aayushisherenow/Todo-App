@@ -7,4 +7,5 @@ export default defineConfig({
   server: {
     port: 4444,
   },
+  base: process.env.VITE_BASE_PATH || "/Todo-App",
 });
