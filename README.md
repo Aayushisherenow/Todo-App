@@ -25,8 +25,8 @@ This is a full-stack To-Do application.It allows users to add, update, and delet
 ## 🔗 Live Links
 
 
-- 🌐 Frontend: -------
-- 🛠️ Backend API: ------
+- 🌐 Frontend: https://todo-6u17zwdoz-aayush-poudels-projects-471383aa.vercel.app
+- 🛠️ Backend API:
 
 ## 🧪 Setup Instructions (Run Locally)
 

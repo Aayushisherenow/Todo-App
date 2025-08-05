@@ -9,13 +9,16 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: "http://localhost:4444", 
+    origin: [`http://localhost:${process.env.LISTEN_PORT || 4444}`,
+      "https://todo-6u17zwdoz-aayush-poudels-projects-471383aa.vercel.app",
+      "https://todo-app-pi-coral.vercel.app"
+    ], 
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
+  
 
 
 import todoRoutes from './routes/todoRoutes.js';
