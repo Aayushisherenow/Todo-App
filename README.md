@@ -12,6 +12,12 @@ This is a full-stack To-Do application.It allows users to add, update, and delet
 - ✅ MongoDB Atlas for database
 - ✅ API validation & basic error handling
 - ✅ JWT-based login & signup
+- ✅Backend deployed on Render
+- ✅Frontend deployed on Vercel
+
+
+
+
 
 ## 🛠️ Technologies Used
 
@@ -21,12 +27,13 @@ This is a full-stack To-Do application.It allows users to add, update, and delet
 | Backend   | Node.js, Express.js               |
 | Database  | MongoDB (via MongoDB Atlas)       |
 | Auth      | JSON web tokens (JWT)                               |
+|Deployment | Frontend on Vercel and Backend on Render            | 
 
 ## 🔗 Live Links
 
 
 - 🌐 Frontend: https://todo-6u17zwdoz-aayush-poudels-projects-471383aa.vercel.app
-- 🛠️ Backend API:
+- 🛠️ Backend API:https://todo-app-w7g9.onrender.com/
 
 ## 🧪 Setup Instructions (Run Locally)
 
