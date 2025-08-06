@@ -6,6 +6,8 @@ const userContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || null);
+  const isProd = import.meta.env.MODE === "production";
+
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -32,7 +34,9 @@ export const UserProvider = ({ children }) => {
 
  
 const authAxios = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: isProd
+    ? import.meta.env.VITE_API_URL
+    : import.meta.env.VITE_LOCAL_API_URL,
 });
 
 authAxios.interceptors.request.use((config) => {
@@ -40,6 +44,7 @@ authAxios.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+    config.headers["Content-Type"] = "application/json";
   return config;
 });
 

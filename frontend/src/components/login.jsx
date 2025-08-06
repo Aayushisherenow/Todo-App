@@ -57,7 +57,6 @@ const Login = ({ isLogin, setIsLogin }) => {
         });
         setSuccess("Login successful");
           localStorage.setItem("token", res.data.token);
-          console.log("User data:", res.data.user);
         login(res.data.user, res.data.token); 
         navigate("/");
       } else {
@@ -71,7 +70,21 @@ const Login = ({ isLogin, setIsLogin }) => {
         setFormData({ username: "", email: "", password: "" });
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong");
+  console.error("API error:", err);
+
+  if (err.response) {
+    // Server responded with a status other than 2xx
+    console.error("Response data:", err.response.data);
+    setError(err.response.data.message || "Something went wrong");
+  } else if (err.request) {
+    // Request was made but no response received
+    setError("No response from server. Please try again later.");
+  } else {
+    // Something else happened setting up the request
+    setError(err.message);
+  }
+
+
     }
   };
 

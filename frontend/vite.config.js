@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     port: parseInt(process.env.VITE_PORT) || 4444,
     proxy: {
-      "/api": "http://localhost:4444",
+      "/api": "http://localhost:3333",
     },
   },
   base: process.env.VITE_BASE_PATH || "/",
