@@ -32,7 +32,7 @@ This is a full-stack To-Do application.It allows users to add, update, and delet
 ## 🔗 Live Links
 
 
-- 🌐 Frontend: https://todo-6u17zwdoz-aayush-poudels-projects-471383aa.vercel.app
+- 🌐 Frontend: https://todo-app-pi-coral.vercel.app
 - 🛠️ Backend API:https://todo-app-w7g9.onrender.com/
 
 ## 🧪 Setup Instructions (Run Locally)
